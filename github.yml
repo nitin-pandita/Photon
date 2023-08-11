@@ -1,0 +1,2 @@
+- name: GitHub Project Bot
+  uses: nitin-pandita/github-project-bot@v1.0.0

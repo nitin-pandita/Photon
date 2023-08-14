@@ -75,6 +75,10 @@ header{
     object-fit: cover;
 }
 
+.gallery video {
+    width: 100%;
+}
+
 .nav-button {
     display: flex;
     justify-content: center;

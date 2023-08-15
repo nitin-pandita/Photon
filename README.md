@@ -76,6 +76,6 @@ For any questions or feedback, feel free to reach out to us at your@email.com.
 ---
 
 <p align="center">
-  <a href="https://github.com/yourusername" target="_blank"><img alt="GitHub Followers" src="https://img.shields.io/github/followers/yourusername?style=social"></a>
-  <a href="https://twitter.com/yourtwitter" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/yourtwitter?style=social"></a>
+  <a href="https://github.com/nitin-pandita" target="_blank"><img alt="GitHub Followers" src="https://img.shields.io/github/followers/nitin-pandita?style=social"></a>
+  <a href="https://twitter.com/nitintwts" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/nitintwts?style=social"></a>
 </p>

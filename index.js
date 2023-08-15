@@ -18,8 +18,12 @@ function updateInput(e) {
 searchInput.addEventListener("input", updateInput);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  currentSearch = searchValue;
-  searchPhotos(searchValue);
+  if (searchInput.value.trim() !== "") {
+    currentSearch = searchValue;
+    searchPhotos(searchValue);
+  } else {
+    alert('You must enter a valid entry to search.')
+  }
 });
 
 more.addEventListener("click", loadMore);

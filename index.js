@@ -6,6 +6,7 @@ const searchInput = document.querySelector(".search-input");
 const more = document.querySelector(".more");
 let searchValue;
 let page = 1;
+let itemsPerPage = 10;
 let fetchLink;
 // now i need to see if there anything inside the text or not if yes pass it
 let currentSearch;
@@ -56,10 +57,36 @@ async function generateImages(data) {
     gallery.appendChild(galleryImage);
   });
 }
+
 async function curatedPhoto() {
-  fetchLink = "https://api.pexels.com/v1/curated?per_page=20&page=1";
+  fetchLink = `https://api.pexels.com/v1/curated?per_page=${itemsPerPage}&page=1`;
   const data = await fetchApi(fetchLink);
   generateImages(data);
+}
+
+// duplicate of generateImages but for videos
+async function generateVideos(data) {
+  data.videos.forEach(video => {
+    const galleryVideo = document.createElement("div");
+    galleryVideo.classList.add("gallery-img");
+    galleryVideo.innerHTML = `
+    <div class="gallery-info">
+        <p>${video.user.name}</p>
+        <a href=${video.video_files[0].link}>Download</a>
+    </div>
+    <video controls>
+      <source src=${video.video_files[1].link} type='video/mp4' />
+    </video>
+    `;
+    gallery.appendChild(galleryVideo);
+  });
+}
+
+// duplicate function to fetch and gather video api data
+async function popularVideos() {
+  fetchLink = `https://api.pexels.com/videos/popular?per_page=${itemsPerPage}&page=1`;
+  const data = await fetchApi(fetchLink);
+  generateVideos(data)
 }
 
 async function searchPhotos(query) {
@@ -72,9 +99,9 @@ async function searchPhotos(query) {
 async function loadMore() {
   page++;
   if (currentSearch) {
-    fetchLink = `https://api.pexels.com/v1/search?query=${currentSearch}&per_page=15&page=${page}`;
+    fetchLink = `https://api.pexels.com/v1/search?query=${currentSearch}&per_page=${itemsPerPage}&page=${page}`;
   } else {
-    fetchLink = `https://api.pexels.com/v1/curated?per_page=20&page=${page}`;
+    fetchLink = `https://api.pexels.com/v1/curated?per_page=${itemsPerPage}&page=${page}`;
   }
   const data = await fetchApi(fetchLink);
   generateImages(data);
@@ -86,4 +113,9 @@ function clear() {
   searchInput.value = "";
 }
 
-curatedPhoto();
+function gatherPhotosAndVideos() {
+  curatedPhoto()
+  popularVideos()  
+}
+
+gatherPhotosAndVideos()

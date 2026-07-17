@@ -7,29 +7,26 @@ const more = document.querySelector(".more");
 let searchValue;
 let page = 1;
 let fetchLink;
-// now i need to see if there anything inside the text or not if yes pass it
 let currentSearch;
-// functions
+
 function updateInput(e) {
   searchValue = e.target.value;
 }
 
-// adding event Listeners
 searchInput.addEventListener("input", updateInput);
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (searchInput.value.trim() !== "") {
     currentSearch = searchValue;
     searchPhotos(searchValue);
   } else {
-    alert('You must enter a valid entry to search.')
+    alert('You must enter a valid entry to search.');
   }
 });
 
 more.addEventListener("click", loadMore);
-// using the await method
 
-// ? root - api fetching function
 async function fetchApi(url) {
   const fetchData = await fetch(url, {
     method: "GET",
@@ -41,21 +38,26 @@ async function fetchApi(url) {
   const data = await fetchData.json();
   return data;
 }
-// getting the photos
+
 async function generateImages(data) {
-  data.photos.forEach((photo) => {
+  data.photos.forEach((photo, index) => {
     const galleryImage = document.createElement("div");
     galleryImage.classList.add("gallery-img");
+    
+    // Stagger animation timing for smooth presentation flow
+    galleryImage.style.animationDelay = `${index * 0.05}s`;
+
     galleryImage.innerHTML = `
     <div class="gallery-info">
         <p>${photo.photographer}</p>
-        <a href=${photo.src.original}>Download</a>
+        <a href="${photo.src.original}" target="_blank" download>Download</a>
     </div>
-    <img src=${photo.src.large}></img>
+    <img src="${photo.src.large}" alt="${photo.alt || 'Pexels Image'}">
     `;
     gallery.appendChild(galleryImage);
   });
 }
+
 async function curatedPhoto() {
   fetchLink = "https://api.pexels.com/v1/curated?per_page=20&page=1";
   const data = await fetchApi(fetchLink);
@@ -80,7 +82,6 @@ async function loadMore() {
   generateImages(data);
 }
 
-// clearing the previous data or images
 function clear() {
   gallery.innerHTML = "";
   searchInput.value = "";
